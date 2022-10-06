@@ -1,0 +1,17 @@
+{
+  "unchoosable": true,
+  "powers": [
+    "pichuorigins:buildling_stats",
+    "origins:fall_immunity",
+    "origins:strong_arms",
+    "origins:ignore_water",
+    "pichuorigins:buildling_damage_in",
+    "pichuorigins:buildling_damage_out",
+    "pichuorigins:buildling_harvest",
+    "pichuorigins:buildling_ignorewater",
+    "pichuorigins:buildling_breakspeed"
+  ],
+  "icon": "blackstone",
+  "order": 4,
+  "impact": 3
+}

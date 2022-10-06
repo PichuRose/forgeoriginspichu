@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "origins": [
+	"pichuorigins:fairy",
+    "pichuorigins:buildling",
+    "pichuorigins:macro",
+    "pichuorigins:nano",
+    "pichuorigins:chu"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "unchoosable": true,
+  "powers": [
+    "pichuorigins:fairy_health",
+    "puchuorigins:fairy_bow",
+    "origins:fall_immunity",
+    "pichuorigins:fairy_wings",
+    "pichuorigins:fairy_breakspeed",
+    "pichuorigins:swim_any_time",
+    "pichuorigins:fairy_swimspeed",
+    "pichuorigins:fairy_size"
+
+  ],
+  "icon": "dirt",
+  "order": 3,
+  "impact": 3
+}

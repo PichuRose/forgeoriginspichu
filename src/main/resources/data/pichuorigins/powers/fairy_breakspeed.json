@@ -1,0 +1,11 @@
+{
+  "type": "origins:modify_break_speed",
+  "block_condition": {
+    "type": "origins:block",
+    "block": "minecraft:stone"
+  },
+  "modifier": {
+    "operation": "multiply_base",
+    "value": -0.5
+  }
+}

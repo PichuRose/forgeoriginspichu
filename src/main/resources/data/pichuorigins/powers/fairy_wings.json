@@ -1,0 +1,18 @@
+{
+  "type": "origins:starting_equipment",
+  "recurrent": false,
+  "stacks": [
+
+    {
+      "item": "forgeoriginspichu:fairy_wings",
+      "amount": 1,
+      "tag": "{Enchantments:[{id:binding_curse,lvl:1}]}",
+      "slot": 38
+    },
+    {
+      "item": "minecraft:poppy",
+      "amount": 1,
+      "slot": 8
+    }
+  ]
+}
