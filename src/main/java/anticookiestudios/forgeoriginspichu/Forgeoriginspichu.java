@@ -14,6 +14,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -44,6 +46,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -57,10 +60,11 @@ public class Forgeoriginspichu {
 
 
     // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
+    static final Logger LOGGER = LogManager.getLogger();
 
     public Forgeoriginspichu() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(this::setup);
         //ItemRegistry.ITEMS.register(bus);
         if (ModList.get().isLoaded("threecore")) {
             PichuResizeType.pichuSizeChangeTypes.register(bus);
@@ -74,6 +78,7 @@ public class Forgeoriginspichu {
             ScaleModifier modifier = new ScaleModifier() {
                 @Override
                 public float modifyScale(ScaleData scaleData, float modifiedScale, float delta) {
+                    //return PichuScaleType.get().getScaleData(scaleData.getEntity()).getScale(delta) * modifiedScale;
                     return PichuScaleType.get().getScaleData(scaleData.getEntity()).getScale(delta) * modifiedScale;
                 }
             };
@@ -85,14 +90,21 @@ public class Forgeoriginspichu {
                     .addDependentModifier(PichuScaleModifier.get())
                     .build();
             ScaleRegistries.SCALE_TYPES.put(new ResourceLocation("pichu_resize"), type);
-            ScaleType.BASE.getDefaultBaseValueModifiers().add(modifier);
-            PichuScaleType.set(type);
+            //ScaleType.defaultBaseValueModifiers.add(modifier);
+            ScaleType.Builder builder = new ScaleType.Builder.create();
+            PehkuiSupport.PichuScaleType.set(type);
+            PehkuiSupport.PichuScaleType.
         }
 
 
     }
 
     public void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
+        if(event.player.getEntityWorld().getWorldInfo().getGameTime()%10!=0){
+            return;
+        }
+
+
         PlayerEntity player = event.player;
         String[] origins = getOrigin(player);
         if(origins == null)
@@ -103,7 +115,7 @@ public class Forgeoriginspichu {
         float buildlingScale = 4F;
         float macroScale = 16F;
         float nanoScale = 0.00390625F;
-        float[] chuHeights = {.01F, .0175F, .03125F, .0475F, .0625F, .15F, .25F, .5F, .7F, .85F, 1F, 1.125F, 1.25F, 1.5F, 2F};
+        //float[] chuHeights = {.01F, .0175F, .03125F, .0475F, .0625F, .15F, .25F, .5F, .7F, .85F, 1F, 1.125F, 1.25F, 1.5F, 2F};
 
 
         float playerHp = player.getHealth();
@@ -128,12 +140,18 @@ public class Forgeoriginspichu {
             isChu = o.contains("origin.pichuorigins.chu.name");
         }
         if(isChu) {
+
+            if(event.player.isInWater()){
+                player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 20, 2, false, false));
+            }
+
             if (playerHp >= 0) {
                 float chuScale = 1;
 
-                chuScale *= playerHpPercentage;
+                chuScale *= Math.pow(playerHpPercentage*2, 1.23);
 
                 chuScale = (float)Math.max(chuScale, 0.00001);
+                chuScale = (float)Math.min(chuScale, 2.65);
                 newScale *= chuScale;
             }
         }
@@ -148,6 +166,8 @@ public class Forgeoriginspichu {
 
         if(newScale != scale)
             ResizingUtils.resize(event.player, newScale);
+
+
     }
 
     /*public boolean isOrigin(PlayerEntity player, String name){
@@ -167,9 +187,12 @@ public class Forgeoriginspichu {
         String[] originsStrings = new String[originArray.length];
         for(int i = 0; i < originArray.length;i++) {
             originsStrings[i] = ((Origin) originArray[i]).getName().toString();
-            System.out.println(originsStrings[i]);
         }
         return originsStrings;
+    }
+
+    private void setup(final FMLCommonSetupEvent event) {
+        if (ModList.get().isLoaded("pehkui")) PehkuiSupport.setup();
     }
 }
 

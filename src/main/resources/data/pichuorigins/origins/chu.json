@@ -1,6 +1,7 @@
 {
   "powers": [
-    "pichuorigins:chu_witherhot"
+    "pichuorigins:chu_witherhot",
+    "pichuorigins:chu_translucent"
   ],
   "icon": "water_bucket",
   "order": 5,

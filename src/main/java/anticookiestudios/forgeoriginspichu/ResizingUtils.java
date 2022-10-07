@@ -31,7 +31,7 @@ public class ResizingUtils {
             if (ModList.get().isLoaded("gulliver") && entity instanceof LivingEntity) {
                 GulliverSize.changeSize((LivingEntity) entity, 1);
             }
-            Forgeoriginspichu.PichuScaleType.get().getScaleData(entity).setTargetScale(newSize);
+            PehkuiSupport.PichuScaleType.get().getScaleData(entity).setTargetScale(newSize);
         } else if (ModList.get().isLoaded("gulliver") && entity instanceof LivingEntity) {
             if (ModList.get().isLoaded("threecore")) {
                 entity.getCapability(CapabilitySizeChanging.SIZE_CHANGING).ifPresent((cap) -> {
@@ -64,7 +64,7 @@ public class ResizingUtils {
     public static float getSize(Entity entity) {
         AtomicReference<Float> size = new AtomicReference<>(1f);
         if (ModList.get().isLoaded("pehkui"))
-            size.set(size.get() * Forgeoriginspichu.PichuScaleType.get().getScaleData(entity).getTargetScale());
+            size.set(size.get() * PehkuiSupport.PichuScaleType.get().getScaleData(entity).getTargetScale());
         if (ModList.get().isLoaded("gulliver") && entity instanceof LivingEntity) {
             if (((LivingEntity) entity).getAttribute(Attributes.ENTITY_HEIGHT.get()) != null) {
                 AttributeModifier modifier = ((LivingEntity) entity).getAttribute(Attributes.ENTITY_HEIGHT.get()).getModifier(uuidHeight);

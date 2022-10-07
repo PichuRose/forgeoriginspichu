@@ -148,7 +148,7 @@ dependencies {
     compileOnly fg.deobf('curse.maven:shrink-426386:3352335')
     compileOnly fg.deobf('curse.maven:threecore-349285:3187033')
     compileOnly fg.deobf('curse.maven:gullivern-385915:3227241')
-    implementation fg.deobf('curse.maven:pehkui-319596:3351969')
+    compile fg.deobf('curse.maven:pehkui_new-319596:3545512')
     implementation fg.deobf('curse.maven:originsforge-474438:3391622')
     implementation fg.deobf('curse.maven:caelusapi-308989:3403876')
     implementation fg.deobf('curse.maven:clothconfig-348521:3311352')
