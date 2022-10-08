@@ -2,6 +2,6 @@
   "type": "origins:modify_swim_speed",
   "modifier": {
     "operation": "addition",
-    "value": 0.25
+    "value": 0.1
   }
 }

@@ -1,18 +1,10 @@
 {
   "type": "origins:attribute",
-  "modifiers":
-  [
+  "modifier":
   {
     "name": "Origin modifier",
     "attribute": "generic.max_health",
     "operation": "addition",
-    "value": -16.0
-  },
-{
-  "name": "Origin modifier",
-  "attribute": "generic.attack_speed",
-  "operation": "addition",
-  "value": 10.0
-}
-    ]
+    "value": -4.0
+  }
 }

@@ -1,14 +1,15 @@
 {
   "type": "origins:stacking_status_effect",
   "min_stacks": -20,
-  "max_stacks": 150,
+  "max_stacks": 10,
   "duration_per_stack": 10,
   "effects": [
     {
-      "effect": "minecraft:wither",
+      "effect": "minecraft:hunger",
       "is_ambient": true,
       "show_particles": false,
-      "show_icon": true
+      "show_icon": true,
+      "amplifier": 25
     }
   ],
   "condition": {

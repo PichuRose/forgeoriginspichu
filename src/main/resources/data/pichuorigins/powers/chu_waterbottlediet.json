@@ -1,0 +1,56 @@
+{
+  "type": "origins:active_self",
+  "cooldown": 10,
+  "hud_render": {
+    "should_render": false
+  },
+  "condition": {
+    "type": "origins:and",
+    "conditions": [
+      {
+        "type": "origins:equipped_item",
+        "equipment_slot": "mainhand",
+        "item_condition": {
+          "type": "origins:ingredient",
+          "ingredient": {
+            "item": "minecraft:potion"
+          }
+        }
+      },
+      {
+        "type": "origins:food_level",
+        "comparison": "<",
+        "compare_to": 20
+      }
+    ]
+  },
+  "entity_action": {
+    "type": "origins:and",
+    "actions": [
+      {
+        "type": "origins:execute_command",
+        "command": "clear @s minecraft:potion 1"
+      },
+      {
+        "type": "origins:execute_command",
+        "command": "give @s minecraft:glass_bottle 1"
+      },
+      {
+        "type": "origins:execute_command",
+        "command": "playsound minecraft:item.honey_bottle.drink player @s ~ ~ ~ 1 1"
+      },
+      {
+        "type": "origins:feed",
+        "food": 5,
+        "saturation": 1
+      }
+    ]
+  },
+  "key": {
+    "key": "key.use",
+    "continuous": true
+  },
+  "name": "Watery Diet",
+  "description": "You can only drink buckets and bottles of water",
+  "hidden": true
+}

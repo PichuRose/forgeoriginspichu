@@ -7,16 +7,23 @@ import io.github.apace100.origins.origin.OriginLayer;
 import io.github.apace100.origins.origin.OriginLayers;
 import io.github.apace100.origins.power.PowerType;
 import io.github.apace100.origins.power.PowerTypes;
+import me.shedaniel.architectury.registry.entity.EntityAttributes;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.*;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.TickEvent;
@@ -42,11 +49,7 @@ import virtuoel.pehkui.api.ScaleModifier;
 import virtuoel.pehkui.api.ScaleRegistries;
 import virtuoel.pehkui.api.ScaleType;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -57,6 +60,7 @@ public class Forgeoriginspichu {
     //GiantLuigi4
     public static final AtomicReference<ScaleModifier> PichuScaleModifier = new AtomicReference<>();
     public static final AtomicReference<ScaleType> PichuScaleType = new AtomicReference<>();
+    private static final UUID PICHU_HEALTH_UUID = new UUID(new Random(8675309).nextLong(), new Random(141234).nextLong());
 
 
     // Directly reference a log4j logger.
@@ -73,42 +77,22 @@ public class Forgeoriginspichu {
         //MinecraftForge.EVENT_BUS.addListener(this::onLivingEquipmentChangeEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onPlayerTickEvent);
 
-        //GiantLuigi4
-        if (ModList.get().isLoaded("pehkui")) {
-            ScaleModifier modifier = new ScaleModifier() {
-                @Override
-                public float modifyScale(ScaleData scaleData, float modifiedScale, float delta) {
-                    //return PichuScaleType.get().getScaleData(scaleData.getEntity()).getScale(delta) * modifiedScale;
-                    return PichuScaleType.get().getScaleData(scaleData.getEntity()).getScale(delta) * modifiedScale;
-                }
-            };
-
-            ScaleRegistries.SCALE_MODIFIERS.put(new ResourceLocation("forgeoriginspichu:pichu_resize"), modifier);
-            PichuScaleModifier.set(modifier);
-            ScaleType type = ScaleType.Builder.create()
-                    .affectsDimensions()
-                    .addDependentModifier(PichuScaleModifier.get())
-                    .build();
-            ScaleRegistries.SCALE_TYPES.put(new ResourceLocation("pichu_resize"), type);
-            //ScaleType.defaultBaseValueModifiers.add(modifier);
-            ScaleType.Builder builder = new ScaleType.Builder.create();
-            PehkuiSupport.PichuScaleType.set(type);
-            PehkuiSupport.PichuScaleType.
-        }
-
 
     }
 
     public void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
-        if(event.player.getEntityWorld().getWorldInfo().getGameTime()%10!=0){
+        if(event.player.getEntityWorld().getWorldInfo().getGameTime()%3!=0){
             return;
         }
 
 
         PlayerEntity player = event.player;
         String[] origins = getOrigin(player);
-        if(origins == null)
+        if(origins == null) {
             ResizingUtils.resize(event.player, 1);
+            scalePlayerHP(player, 0);
+            return;
+        }
 
         float scale = ResizingUtils.getSize(event.player);
         float fairyScale = 0.0625F;
@@ -120,6 +104,15 @@ public class Forgeoriginspichu {
 
         float playerHp = player.getHealth();
         float playerHpPercentage = playerHp/20;
+
+        float hpPercentage = 0;
+
+
+
+
+        //for(ItemStack i:inventory){
+            //if(i.getDisplayName())
+        //}
 
         float newScale = 1;
 
@@ -142,7 +135,14 @@ public class Forgeoriginspichu {
         if(isChu) {
 
             if(event.player.isInWater()){
-                player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 20, 2, false, false));
+                player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 10, 2, false, false));
+                player.addPotionEffect(new EffectInstance(Effects.SATURATION, 10, 2, false, false));
+                player.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 10, 2, false, false));
+                player.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 10, 2, false, false));
+            }
+            else if(event.player.isInWaterRainOrBubbleColumn()){
+                player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 10, 2, false, false));
+                player.addPotionEffect(new EffectInstance(Effects.SATURATION, 10, 2, false, false));
             }
 
             if (playerHp >= 0) {
@@ -155,8 +155,31 @@ public class Forgeoriginspichu {
                 newScale *= chuScale;
             }
         }
-        if (isFairy)
-            newScale *= fairyScale;
+        if (isFairy){
+
+            scalePlayerHP(player, 2);
+            int flowerNum = 0;
+
+            List<ItemStack> inventory = player.inventory.mainInventory;
+
+            for(ItemStack i:inventory){
+                if(TagUtils.isBlockOfTag(i.getItem(),"minecraft:flowers")){
+                    flowerNum+=i.getCount();
+                }
+            }
+
+            flowerNum = Math.max(flowerNum, 1);
+            flowerNum = Math.min(flowerNum, 64);
+            float flowerScale = (float)(flowerNum/64.0);
+            newScale *= flowerScale;
+            float healthScale = (float) Math.pow(newScale,2);
+
+            healthScale = (float)Math.max(healthScale, 0.4);
+            healthScale = (float)Math.min(healthScale, 1);
+            hpPercentage = -(1-(healthScale));
+            //System.out.println(hpReducePercentage);
+        }
+
         if(isBuildling)
             newScale *= buildlingScale;
         if(isMacro)
@@ -166,6 +189,9 @@ public class Forgeoriginspichu {
 
         if(newScale != scale)
             ResizingUtils.resize(event.player, newScale);
+
+        //System.out.println(hpUPB);
+        scalePlayerHP(player, hpPercentage);
 
 
     }
@@ -194,5 +220,15 @@ public class Forgeoriginspichu {
     private void setup(final FMLCommonSetupEvent event) {
         if (ModList.get().isLoaded("pehkui")) PehkuiSupport.setup();
     }
+
+    public void scalePlayerHP(PlayerEntity pPlayer, float upb) {
+        ModifiableAttributeInstance instance = pPlayer.getAttribute(Attributes.MAX_HEALTH);
+        instance.removeModifier(PICHU_HEALTH_UUID);
+        instance.applyPersistentModifier(
+                new AttributeModifier(PICHU_HEALTH_UUID, "pichuorigins:maxhealth", upb, AttributeModifier.Operation.MULTIPLY_TOTAL)
+        );
+        //isReachSet = true;
+    }
+
 }
 

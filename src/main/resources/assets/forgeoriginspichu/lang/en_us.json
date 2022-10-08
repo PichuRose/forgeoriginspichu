@@ -34,6 +34,20 @@
   "power.pichuorigins.buildling_breakspeed.description": "Your tools are as big as your hands, and thus mine stone a lot faster",
 
   "origin.pichuorigins.chu.name": "Chu",
-  "power.pichuorigins.chu_witherhot.name": "Melts Like Water",
-  "power.pichuorigins.chu_witherhot.description": "You are slime, which is like water, and thus you feel yourself melting away in extreme heat."
+  "origin.pichuorigins.chu.description": "Slime being that likes to be known as a she, but can look like anything it wants. It is very similar to water, and thus absorbs it for food and healing. The size is based on health.",
+  "power.pichuorigins.chu_hungerhot.name": "Melting in the Mesa",
+  "power.pichuorigins.chu_hungerhot.description": "You are slime, which is like water, and thus you feel yourself melting away in extreme heat.",
+  "power.pichuorigins.chu_slowcold.name": "Freezing in the Frozen Forest",
+  "power.pichuorigins.chu_slowcold.description": "You are slime, which is like water, and thus you feel yourself solidifying like ice in extreme cold.",
+  "power.pichuorigins.chu_translucent.name": "Translucent Transformation",
+  "power.pichuorigins.chu_translucent.description": "You are slime, which is like water, and thus you are a little see-through",
+  "power.pichuorigins.chu_swordresistant.name": "Slimey Skin",
+  "power.pichuorigins.chu_swordresistant.description": "Slime can easily reform after being slashed, so it takes a substantial beating!",
+  "power.pichuorigins.chu_doublefiredamage.name": "Boiling Bod",
+  "power.pichuorigins.chu_doublefiredamage.description": "Water doesn't like fire very much",
+  "power.pichuorigins.chu_evaporation.name": "Extended Evaporation",
+  "power.pichuorigins.chu_evaporation.description": "Your hunger is always slowly running out while in open air",
+  "power.pichuorigins.chu_expunge.name": "Regretful Removal",
+  "power.pichuorigins.chu_expunge.description": "Remove a chunk of yourself using H(also Wet Eyes is G)"
+
 }

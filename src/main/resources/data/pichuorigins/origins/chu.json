@@ -1,9 +1,22 @@
 {
   "powers": [
-    "pichuorigins:chu_witherhot",
-    "pichuorigins:chu_translucent"
-  ],
-  "icon": "water_bucket",
+    "origins:water_vision",
+    "pichuorigins:chu_expunge",
+    "pichuorigins:chu_hungerhot",
+    "pichuorigins:chu_translucent",
+    "pichuorigins:chu_swordresistant",
+    "pichuorigins:chu_waterbucketdiet",
+    "pichuorigins:chu_waterbottlediet",
+    "pichuorigins:chu_slowcold",
+    "pichuorigins:chu_doublefiredamage",
+    "pichuorigins:chu_evaporation",
+    "origins:like_water",
+    "origins:carnivore",
+    "origins:vegetarian",
+    "origins:aqua_affinity",
+    "origins:climbing",
+    "origins:fall_immunity"
+  ],  "icon": "water_bucket",
   "order": 5,
   "impact": 3
 }
