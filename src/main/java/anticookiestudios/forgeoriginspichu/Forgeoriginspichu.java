@@ -187,8 +187,9 @@ public class Forgeoriginspichu {
         if(isNano)
             newScale *= nanoScale;
 
-        if(newScale != scale)
+        if(newScale != scale) {
             ResizingUtils.resize(event.player, newScale);
+        }
 
         //System.out.println(hpUPB);
         scalePlayerHP(player, hpPercentage);
