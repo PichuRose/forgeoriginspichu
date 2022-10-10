@@ -1,6 +1,6 @@
 //giantluigi4
 package anticookiestudios.forgeoriginspichu;
-import anticookiestudios.forgeoriginspichu.Forgeoriginspichu;
+
 import net.minecraft.util.ResourceLocation;
 import virtuoel.pehkui.api.ScaleData;
 import virtuoel.pehkui.api.ScaleModifier;
@@ -31,14 +31,14 @@ public class PehkuiSupport {
                 .build();
         ScaleRegistries.SCALE_TYPES.put(new ResourceLocation("pichu:pichu_resize"), pichuType);
         Optional<ScaleType> baseType = getType("base");
-        // pichuppress warning because I don't want to risk accidental class loading, nor do I want intelliJ constantly warning me about the fact that I do this
-        //noinspection OptionalIsPresent
-        if (baseType.isPresent())
-            baseType.get().getDefaultBaseValueModifiers().add(modifier);
+        //pichu suppress warning because I don't want to risk accidental class loading, nor do I want intelliJ constantly warning me about the fact that I do this
+        //solution: right click -> functional style expression - gamma
+        baseType.ifPresent(scaleType -> scaleType.getDefaultBaseValueModifiers().add(modifier));
         PichuScaleType.set(pichuType);
     }
 
     // using optional to prevent accidental class loading
+    //smart - gama
     public static Optional<ScaleType> getType(String name) {
         return Optional.of(ScaleRegistries.getEntry(ScaleRegistries.SCALE_TYPES, new ResourceLocation("pehkui", name)));
     }

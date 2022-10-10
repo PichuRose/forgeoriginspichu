@@ -3,12 +3,10 @@ package anticookiestudios.forgeoriginspichu;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.List;
 
 public class TagUtils {
     public static ITag.INamedTag<Block> getBlockTag(ResourceLocation name) {

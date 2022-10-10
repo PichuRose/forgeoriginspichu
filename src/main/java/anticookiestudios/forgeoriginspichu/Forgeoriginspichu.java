@@ -1,65 +1,34 @@
 package anticookiestudios.forgeoriginspichu;
 
-import io.github.apace100.origins.command.OriginArgument;
-import io.github.apace100.origins.component.OriginComponent;
 import io.github.apace100.origins.origin.Origin;
 import io.github.apace100.origins.origin.OriginLayer;
-import io.github.apace100.origins.origin.OriginLayers;
-import io.github.apace100.origins.power.PowerType;
-import io.github.apace100.origins.power.PowerTypes;
-import me.shedaniel.architectury.registry.entity.EntityAttributes;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.*;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.threetag.threecore.sizechanging.DefaultSizeChangeType;
-import net.threetag.threecore.sizechanging.SizeChangeType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import virtuoel.pehkui.api.ScaleData;
-import virtuoel.pehkui.api.ScaleModifier;
-import virtuoel.pehkui.api.ScaleRegistries;
-import virtuoel.pehkui.api.ScaleType;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("forgeoriginspichu")
 public class Forgeoriginspichu {
 
     //GiantLuigi4
-    public static final AtomicReference<ScaleModifier> PichuScaleModifier = new AtomicReference<>();
-    public static final AtomicReference<ScaleType> PichuScaleType = new AtomicReference<>();
+    //tf did luigi do - gamma
+//    public static final AtomicReference<ScaleModifier> PichuScaleModifier = new AtomicReference<>();
+//    public static final AtomicReference<ScaleType> PichuScaleType = new AtomicReference<>();
     private static final UUID PICHU_HEALTH_UUID = new UUID(new Random(8675309).nextLong(), new Random(141234).nextLong());
 
 
@@ -95,7 +64,7 @@ public class Forgeoriginspichu {
         }
 
         float scale = ResizingUtils.getSize(event.player);
-        float fairyScale = 0.0625F;
+//        float fairyScale = 0.0625F;
         float buildlingScale = 4F;
         float macroScale = 16F;
         float nanoScale = 0.00390625F;
@@ -175,7 +144,7 @@ public class Forgeoriginspichu {
             float healthScale = (float) Math.pow(newScale,2);
 
             healthScale = (float)Math.max(healthScale, 0.4);
-            healthScale = (float)Math.min(healthScale, 1);
+            healthScale = Math.min(healthScale, 1);
             hpPercentage = -(1-(healthScale));
             //System.out.println(hpReducePercentage);
         }
@@ -224,7 +193,7 @@ public class Forgeoriginspichu {
 
     public void scalePlayerHP(PlayerEntity pPlayer, float upb) {
         ModifiableAttributeInstance instance = pPlayer.getAttribute(Attributes.MAX_HEALTH);
-        instance.removeModifier(PICHU_HEALTH_UUID);
+        Objects.requireNonNull(instance).removeModifier(PICHU_HEALTH_UUID);
         instance.applyPersistentModifier(
                 new AttributeModifier(PICHU_HEALTH_UUID, "pichuorigins:maxhealth", upb, AttributeModifier.Operation.MULTIPLY_TOTAL)
         );

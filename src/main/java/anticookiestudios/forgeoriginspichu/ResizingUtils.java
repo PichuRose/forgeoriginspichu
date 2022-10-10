@@ -9,14 +9,14 @@ import net.minecraftforge.fml.ModList;
 import net.teamfruit.gulliver.GulliverSize;
 import net.teamfruit.gulliver.attributes.Attributes;
 import net.threetag.threecore.capability.CapabilitySizeChanging;
-import virtuoel.pehkui.Pehkui;
 
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ResizingUtils {
     private static final UUID uuidHeight = UUID.fromString("5440b01a-974f-4495-bb9a-c7c87424bca4");
-    private static final UUID uuidWidth = UUID.fromString("3949d2ed-b6cc-4330-9c13-98777f48ea51");
+//    private static final UUID uuidWidth = UUID.fromString("3949d2ed-b6cc-4330-9c13-98777f48ea51");
 
     public static void resize(Entity entity, float newSize) {
         //TODO: chiseled me integration
@@ -43,21 +43,17 @@ public class ResizingUtils {
             GulliverSize.changeSize((LivingEntity) entity, newSize);
         } else if (ModList.get().isLoaded("shrink")) {
             if (entity instanceof LivingEntity) {
-                float finalNewSize1 = newSize;
                 if (entity.getEntityWorld().isRemote) return;
                 entity.getCapability(ShrinkAPI.SHRINK_CAPABILITY).ifPresent((iShrinkProvider) -> {
-                    if (finalNewSize1 == 1) iShrinkProvider.deShrink((LivingEntity) entity);
+                    if (newSize == 1) iShrinkProvider.deShrink((LivingEntity) entity);
                     else {
                         if (!iShrinkProvider.isShrunk()) iShrinkProvider.shrink((LivingEntity) entity);
-                        iShrinkProvider.setScale(finalNewSize1);
+                        iShrinkProvider.setScale(newSize);
                     }
                 });
             }
         } else if (ModList.get().isLoaded("threecore")) {
-            float finalNewSize = newSize;
-            entity.getCapability(CapabilitySizeChanging.SIZE_CHANGING).ifPresent((cap) -> {
-                cap.startSizeChange(PichuResizeType.PICHU_CHANGE_TYPE.get(), finalNewSize);
-            });
+            entity.getCapability(CapabilitySizeChanging.SIZE_CHANGING).ifPresent((cap) -> cap.startSizeChange(PichuResizeType.PICHU_CHANGE_TYPE.get(), newSize));
         }
     }
 
@@ -67,7 +63,7 @@ public class ResizingUtils {
             size.set(size.get() * PehkuiSupport.PichuScaleType.get().getScaleData(entity).getTargetScale());
         if (ModList.get().isLoaded("gulliver") && entity instanceof LivingEntity) {
             if (((LivingEntity) entity).getAttribute(Attributes.ENTITY_HEIGHT.get()) != null) {
-                AttributeModifier modifier = ((LivingEntity) entity).getAttribute(Attributes.ENTITY_HEIGHT.get()).getModifier(uuidHeight);
+                AttributeModifier modifier = Objects.requireNonNull(((LivingEntity) entity).getAttribute(Attributes.ENTITY_HEIGHT.get())).getModifier(uuidHeight);
 
                 if (modifier != null) {
                     float s;
@@ -85,9 +81,7 @@ public class ResizingUtils {
         }
         if (ModList.get().isLoaded("shrink")) {
             if (entity instanceof LivingEntity) {
-                entity.getCapability(ShrinkAPI.SHRINK_CAPABILITY).ifPresent((iShrinkProvider) -> {
-                    size.set(size.get() * iShrinkProvider.scale());
-                });
+                entity.getCapability(ShrinkAPI.SHRINK_CAPABILITY).ifPresent((iShrinkProvider) -> size.set(size.get() * iShrinkProvider.scale()));
             }
         }
         if (ModList.get().isLoaded("threecore")) {
@@ -117,11 +111,5 @@ public class ResizingUtils {
 		}
 	}*/
 
-    public static boolean isResizingModPresent() {
-        return
-                ModList.get().isLoaded("threecore") ||
-                        ModList.get().isLoaded("shrink") ||
-                        ModList.get().isLoaded("gullivern") ||
-                        ModList.get().isLoaded("pehkui");
-    }
+
 }

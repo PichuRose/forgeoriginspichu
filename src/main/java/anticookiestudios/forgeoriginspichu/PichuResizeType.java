@@ -3,7 +3,6 @@ package anticookiestudios.forgeoriginspichu;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraftforge.fml.RegistryObject;
@@ -35,7 +34,7 @@ public class PichuResizeType extends DefaultSizeChangeType {
             }
             if (size >= 1f / 4) scl = 0;
             this.setAttribute((LivingEntity) entity, Attributes.MOVEMENT_SPEED, scl, AttributeModifier.Operation.ADDITION, SizeChangeType.ATTRIBUTE_UUID);
-            this.setAttribute((LivingEntity) entity, (Attribute) TCAttributes.JUMP_HEIGHT.get(), -1, AttributeModifier.Operation.ADDITION, SizeChangeType.ATTRIBUTE_UUID);
+            this.setAttribute((LivingEntity) entity, TCAttributes.JUMP_HEIGHT.get(), -1, AttributeModifier.Operation.ADDITION, SizeChangeType.ATTRIBUTE_UUID);
         }
     }
 }

@@ -1,18 +1,11 @@
 package anticookiestudios.forgeoriginspichu;
 
-import java.util.function.Supplier;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
-public enum PichuArmorMaterial implements IArmorMaterial {
-    FAIRY("fairy", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
+/**
+ * REMOVE THIS
+ */
+@Deprecated
+public enum PichuArmorMaterial /*implements IArmorMaterial*/ {
+    /*FAIRY("fairy", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
         return Ingredient.fromItems(Items.POPPY);
     });
 
@@ -67,11 +60,9 @@ public enum PichuArmorMaterial implements IArmorMaterial {
         return this.toughness;
     }
 
-    /**
-     * Gets the percentage of knockback resistance provided by armor of the material.
-     */
+
     public float getKnockbackResistance() {
         return this.knockbackResistance;
-    }
+    }*/
 
 }
